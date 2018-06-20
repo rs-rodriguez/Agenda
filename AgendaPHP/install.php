@@ -4,7 +4,7 @@
     $context = new clientConex();
     $context->initialContex();
     $context->createDB();
-    $context->conectedDB($context->databaseName);
+    $context->conectedDB();
     echo "<br />";
     $tablaUSers = 'usuarios';
     $propUSers['id']= 'INT';

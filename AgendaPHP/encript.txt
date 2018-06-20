@@ -1,0 +1,14 @@
+$hashed_password = crypt('pwdff');
+echo " password encri: ".$hashed_password." dadd::  ----------";
+
+,
+      error: function(){
+        alert("error en la comunicación con el servidor");
+      }
+	  
+	  
+	  cache: false,
+      processData: true,
+      contentType: true,
+	  
+INSERT INTO `events` (`id`, `titulo`, `start_date`, `end_date`, `allDay`, `start_hour`, `end_hour`, `fk_usuario`) VALUES ('1', 'SSSSSS', '2018-02-25', '2018-02-25', '1', '12', '13', '1');

@@ -5,14 +5,14 @@
         private $user = 'root';
         private $password = '';
         private $conexion;
-        private $conexionDB;
-        public $databaseName = 'agenda_db';
+        private $databaseName = 'agenda_db';
         function initialContex(){
             $this->conexion = new PDO('mysql:host='.$this->host.';', $this->user, $this->password);
         }
         
-        function conectedDB($database){
-            $this->conexionDB = new PDO('mysql:dbname='.$database.';host='.$this->host.';', $this->user, $this->password);
+        function conectedDB(){
+            $conexionDB = new PDO('mysql:dbname='.$this->databaseName.';host='.$this->host.';', $this->user, $this->password);
+            return $conexionDB;
         }
 
         function createDB(){
@@ -53,25 +53,27 @@
         }
 
         function verifyUsers(){
+            $conec = $this->conectedDB();
             $sql = 'SELECT COUNT(email) FROM usuarios';
-            $totalUsers = $this->$conexionDB->exec($sql);
-            while ($row = $totalUsers->fetch_assoc()) {
-  
+            $totalUsers = $conec->prepare($sql);
+            $totalUsers->execute();
+            while ($row = $totalUsers->fetch()) {
                 return $row['COUNT(email)'];
             }
         }
 
-        function consultar($tablas, $campos, $condicion = ""){
+        function consultar($tablas, $campos, $condicion = ''){
             $sql = "SELECT ";
-            $ultima_key = end(array_keys($campos));
+            $result = array_keys($campos);
+            $ultima_key = end($result);
             foreach ($campos as $key => $value) {
               $sql .= $value;
               if ($key!=$ultima_key) {
                 $sql.=", ";
               }else $sql .=" FROM ";
             }
-      
-            $ultima_key = end(array_keys($tablas));
+            $result = array_keys($tablas);
+            $ultima_key = end($result);
             foreach ($tablas as $key => $value) {
               $sql .= $value;
               if ($key!=$ultima_key) {
@@ -84,8 +86,58 @@
             }else {
               $sql .= $condicion.";";
             }
-      
-            return $this->$conexionDB->exec($sql);
+            $conexionDB = $this->conectedDB();
+            $result = $conexionDB->prepare($sql);
+            $result->execute();
+            return $result;
         }
+
+        function insertDataTable($tabla, $data){
+            $sql = 'INSERT INTO '.$tabla.' (';
+            $i = 1;
+            foreach ($data as $key => $value) {
+              $sql .= $key;
+              if ($i<count($data)) {
+                $sql .= ', ';
+              }else $sql .= ')';
+              $i++;
+            }
+            $sql .= ' VALUES (';
+            $i = 1;
+            foreach ($data as $key => $value) {
+              $sql .= $value;
+              if ($i<count($data)) {
+                $sql .= ', ';
+              }else $sql .= ');';
+              $i++;
+            }
+            $conexionDB = $this->conectedDB();
+            $result = $conexionDB->prepare($sql);
+            $result->execute();
+            return $result;
+          }
+        
+          function updateDataTable($tabla, $data, $condicion){
+            $sql = 'UPDATE '.$tabla.' SET ';
+            $i=1;
+            foreach ($data as $key => $value) {
+              $sql .= $key.'='.$value;
+              if ($i<sizeof($data)) {
+                $sql .= ', ';
+              }else $sql .= ' WHERE '.$condicion.';';
+              $i++;
+            }
+            $conexionDB = $this->conectedDB();
+            $result = $conexionDB->prepare($sql);
+            $result->execute();
+            return $result;
+          }
+          function deleteData($tabla, $condicion){
+            $sql = "DELETE FROM ".$tabla." WHERE ".$condicion.";";
+            $conexionDB = $this->conectedDB();
+            $result = $conexionDB->prepare($sql);
+            $result->execute();
+            return $result;
+          }
     }
 ?>
