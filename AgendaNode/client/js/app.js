@@ -15,7 +15,7 @@ class EventManager {
     }
 
     eliminarEvento(evento) {
-        let eventId = evento.id
+        let eventId = evento._id
         $.post('/events/delete/'+eventId, {id: eventId}, (response) => {
             alert(response)
         })
@@ -87,7 +87,7 @@ class EventManager {
                 center: 'title',
                 right: 'month,agendaWeek,basicDay'
             },
-            defaultDate: '2016-11-01',
+            defaultDate: '2018-07-01',
             navLinks: true,
             editable: true,
             eventLimit: true,
@@ -99,7 +99,7 @@ class EventManager {
             },
             events: eventos,
             eventDragStart: (event,jsEvent) => {
-                $('.delete').find('img').attr('src', "img/trash-open.png");
+                $('.delete').find('img').attr('src', "img/delete.png");
                 $('.delete').css('background-color', '#a70f19')
             },
             eventDragStop: (event,jsEvent) => {
@@ -117,6 +117,46 @@ class EventManager {
                 }
             })
         }
+
+        actualizarEvento(evento) {
+
+            if(evento.end === null){
+              var start = moment(evento.start).format('YYYY-MM-DD'),
+                  url = '/events/update/'+evento._id+'&'+start+'&'+start
+            }else{
+              var start = moment(evento.start).format('YYYY-MM-DD HH:mm:ss'),
+                  end = moment(evento.end).format('YYYY-MM-DD HH:mm:ss'),
+                  url = '/events/update/'+evento._id+'&'+start+'&'+end
+            }
+  
+              var  data = {
+                    id: evento._id,
+                    start: start,
+                    end: end
+                }
+                $.post(url, data, (response) => {
+                    if(response == "logout" ){
+                      this.sessionError()
+                    }else{
+                      alert(response)
+                    }
+                })
+          }
+  
+          cerrarSesion(){
+            var url = "/usuarios/logout",
+                data = "";
+            $.post(url, data, (response) => {
+              if(response == "logout"){
+                window.location.href="http://localhost:3000/index.html"
+              }else{
+                alert("Error inesperado al cerrar sesión")
+              }
+            })
+          }
     }
 
     const Manager = new EventManager()
+    $('.logout-container').on('click', function(){
+        Manager.cerrarSesion()
+    })
