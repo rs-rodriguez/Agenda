@@ -38,7 +38,7 @@ class EventsManager {
         		center: 'title',
         		right: 'month,agendaWeek,basicDay'
         	},
-        	defaultDate: '2018-06-19',
+        	defaultDate: '2018-07-19',
         	navLinks: true,
         	editable: true,
         	eventLimit: true,
@@ -204,9 +204,21 @@ $(function(){
     event.preventDefault()
     e.anadirEvento()
   })
+  $('#logout').on('click', function(e){
+    logout();
+  })
 });
 
-
+function logout(){
+  $.ajax({
+    url:'../server/logout.php',
+    type: 'post',
+    dataType: 'json',
+    success: function(data){
+      window.location.href = './index.html'
+    },
+  })
+}
 
 function initForm(){
   $('#start_date, #titulo, #end_date').val('');

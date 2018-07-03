@@ -11,7 +11,7 @@
     $resultQuery = $context->consultar(['usuarios'],['id'], "WHERE email='".$_SESSION['email']."'");
     if ($resultQuery->rowCount() > 0) {
         $fila = $resultQuery->fetch();
-        $data['fk_usuario'] = '"'.$fila['id'].'"';
+        $data['fk_usuarios'] = '"'.$fila['id'].'"';
         if($context->insertDataTable('events', $data)){ //Insertar la información en la base de datos
             /*Mostrar mensaje success*/
             $resultado = $context->consultar(['events'],['MAX(id)'],""); //Obtener el id registrado perteneciente al nuevo registro

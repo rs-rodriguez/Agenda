@@ -1,4 +1,5 @@
 <?php
+    session_start(); 
     require('libapp.php');
     $context = new clientConex();
     if(isset($_SESSION['email'])){
@@ -18,7 +19,6 @@
                     $response['msg'] = 'contraseña incorrecta';
                     $response['acceso'] = 'acceso denegado';
                 }
-    
             }
         }
     }

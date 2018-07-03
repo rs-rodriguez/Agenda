@@ -24,9 +24,13 @@
     $propEvents['allDay']= 'VARCHAR(255)';
     $propEvents['start_hour']= 'VARCHAR(10)';
     $propEvents['end_hour']= 'VARCHAR(10)';
+    $propEvents['fk_usuarios']= 'INT';
 
     $query = $context->getNewTableQuery($tablaEvents, $propEvents);
     $context->executeQUerys($query);
+    $context->nuevaRestriccion($tablaUSers, ' CHANGE COLUMN id id INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (id)');
+    $context->nuevaRestriccion($tablaEvents, ' CHANGE COLUMN id id INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (id)');
+    $context->nuevaRelacion($tablaEvents, $tablaUSers, 'fk_usuario_evento','fk_usuarios', 'id');
 
 
 

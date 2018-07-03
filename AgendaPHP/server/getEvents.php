@@ -3,7 +3,7 @@
     require('libapp.php');
     $context = new clientConex();
     $response['msg'] = "OK";
-    $resultQuery = $context->consultar(['events ev','usuarios usr'],['ev.*'], "WHERE usr.email='".$_SESSION['email']."'");
+    $resultQuery = $context->consultar(['events ev','usuarios usr'],['ev.*'], "WHERE usr.email='".$_SESSION['email']."' and usr.id=ev.fk_usuarios");
     $i = 0;
     /*Recorrer el arreglo de resultados*/
     while($fila = $resultQuery->fetch()){

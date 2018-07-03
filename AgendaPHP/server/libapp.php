@@ -6,6 +6,7 @@
         private $password = '';
         private $conexion;
         private $databaseName = 'agenda_db';
+
         function initialContex(){
             $this->conexion = new PDO('mysql:host='.$this->host.';', $this->user, $this->password);
         }
@@ -28,12 +29,25 @@
 
         function executeQUerys($sqlTBL){
             try {
-                $this->conexionDB->exec($sqlTBL);
+                $conec = $this->conectedDB();
+                $conec->exec($sqlTBL);
                 echo "La Tabla fue creada exitosamente";
             } catch (PDOException $e) {
                 print "Error: " . $e->getMessage()."<br/>";
                 die();
             }
+        }
+
+        function nuevaRestriccion($tabla, $restriccion){
+            $sql = 'ALTER TABLE '.$tabla.' '.$restriccion;
+            $conec = $this->conectedDB();
+            $conec->exec($sql);
+        }
+        
+        function nuevaRelacion($from_tbl, $to_tbl, $fk_foreign_key_name, $from_field, $to_field){
+            $sql = 'ALTER TABLE '.$from_tbl.' ADD CONSTRAINT '.$fk_foreign_key_name.' FOREIGN KEY ('.$from_field.') REFERENCES '.$to_tbl.'('.$to_field.');';
+            $conec = $this->conectedDB();
+            $conec->exec($sql);
         }
 
         function getNewTableQuery($nombre_tbl, $campos){
