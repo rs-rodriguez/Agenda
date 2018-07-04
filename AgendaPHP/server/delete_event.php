@@ -1,6 +1,7 @@
 <?php
 require('libapp.php');
 $context = new clientConex();
+//eliminando datos
 if ($context->deleteData('events', 'id='.$_POST['id'])) {
     $response['msg'] = 'OK';
 }else{

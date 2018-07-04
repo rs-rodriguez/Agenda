@@ -1,8 +1,8 @@
 <?php
 require('libapp.php');
 $context = new clientConex();
-$conexion = $context->conectedDB();
-$insert = $conexion->prepare('INSERT INTO usuarios (email, nombre, password , fecha, telefono) VALUES (?,?,?,?,?)');
+$conexion = $context->conectedDB();//coneccion principal
+$insert = $conexion->prepare('INSERT INTO usuarios (email, nombre, password , fecha, telefono) VALUES (?,?,?,?,?)');//se prepara la conslta
 
 $d_password = "1234";
 $email = "alejandro@mail.com";
@@ -11,7 +11,7 @@ $password = password_hash($d_password, PASSWORD_DEFAULT);
 $fecha_nacimiento = "1998-12-08";
 $telefono = "77777777";
 $insert = $conexion->prepare('INSERT INTO usuarios (email, nombre, password , fecha, telefono) VALUES (?,?,?,?,?)');
-$insert->execute(array($email, $nombre, $password, $fecha_nacimiento, $telefono));
+$insert->execute(array($email, $nombre, $password, $fecha_nacimiento, $telefono));// insert para cada tipo de datos
 
 $email = 'carlos@mail.com';
 $nombre = 'carlos';
@@ -37,5 +37,5 @@ while ($fila= $getUsers->fetch()) {
     $response['msg'].=$fila['email'].' ----    ';
 }
 $response['msg'].= 'contraenia: '.$d_password;
-echo json_encode($response);
+echo json_encode($response);// se retorna lo insertado
  ?>

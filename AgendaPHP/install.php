@@ -2,8 +2,10 @@
     require('server/libapp.php');
 
     $context = new clientConex();
+    //se inicializan las conexxiones
     $context->initialContex();
     $context->createDB();
+    //conexion base de datos principal
     $context->conectedDB();
     echo "<br />";
     $tablaUSers = 'usuarios';
@@ -14,7 +16,7 @@
     $propUSers['telefono']= 'VARCHAR(10)';
     $propUSers['fecha']= 'VARCHAR(50)';
     $query = $context->getNewTableQuery($tablaUSers, $propUSers);
-    $context->executeQUerys($query);
+    $context->executeQUerys($query); // creacion de tablas
     echo "<br />";
     $tablaEvents = 'events';
     $propEvents['id']= 'INT';
@@ -27,7 +29,8 @@
     $propEvents['fk_usuarios']= 'INT';
 
     $query = $context->getNewTableQuery($tablaEvents, $propEvents);
-    $context->executeQUerys($query);
+    $context->executeQUerys($query);// creacion de tablas
+    //se agregan las restricciones
     $context->nuevaRestriccion($tablaUSers, ' CHANGE COLUMN id id INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (id)');
     $context->nuevaRestriccion($tablaEvents, ' CHANGE COLUMN id id INT(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (id)');
     $context->nuevaRelacion($tablaEvents, $tablaUSers, 'fk_usuario_evento','fk_usuarios', 'id');
