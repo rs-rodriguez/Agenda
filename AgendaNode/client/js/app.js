@@ -28,13 +28,17 @@ class EventManager {
             start = $('#start_date').val(),
             title = $('#titulo').val(),
             end = '',
-            start_hour = '',
-            end_hour = '';
+            start_hour = '00:00:00',
+            end_hour = '23:59:59';
 
             if (!$('#allDay').is(':checked')) {
                 end = $('#end_date').val()
                 start_hour = $('#start_hour').val()
                 end_hour = $('#end_hour').val()
+                start = start + 'T' + start_hour
+                end = end + 'T' + end_hour
+            }else{
+                end = start
                 start = start + 'T' + start_hour
                 end = end + 'T' + end_hour
             }

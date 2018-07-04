@@ -1,5 +1,6 @@
 var usuario = require('./modelUsuarios')
 
+// aca se generea el usuario demo
 module.exports.crearDemoUsuario = function(callback){
     var data = [
         {
@@ -13,6 +14,7 @@ module.exports.crearDemoUsuario = function(callback){
             password: "123456"
         }
     ]
+    // funcion que permite guardar multiples datos
     usuario.insertMany(data, function(error, docs){
         if (error){
             if (error.code == 11000){

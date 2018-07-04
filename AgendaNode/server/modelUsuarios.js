@@ -1,6 +1,7 @@
 let mongoose = require('mongoose'),
 Schema = mongoose.Schema,
 
+// se difine el documento para usuarios
 UserSchema = new Schema({
     user: {
         type: String,
@@ -18,4 +19,4 @@ UserSchema = new Schema({
 });
 
 let UsarioModel = mongoose.model('Usuario', UserSchema)
-module.exports = UsarioModel
+module.exports = UsarioModel //exporta el documento
