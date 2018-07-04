@@ -3,6 +3,7 @@ const Usuarios = require('./modelUsuarios')
 const Eventos = require('./modelEventos')
 const Operaciones = require('./moduleOperaciones')
 
+// genera los usuarios
 Router.get('/demo', function(req, res) {
     Usuarios.find({user: req.query.user}).count({}, function(err, count) {
       if(count>0){
@@ -62,6 +63,7 @@ Router.get('/demo', function(req, res) {
       })
   })
 
+  //logout app
   Router.post('/logout', function(req, res) {
     req.session.destroy(function(err) {
     if(err) {

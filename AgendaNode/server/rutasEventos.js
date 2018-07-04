@@ -4,6 +4,7 @@ const Evento = require('./modelEventos')
 const Operaciones = require('./moduleOperaciones')
 let ObjectId = require('mongoose').Types.ObjectId;
 
+//carga todos los eventos por usuarios
 RouterEventos.get('/all', function(req, res) {
   req.session.reload(function(err) {
     if(req.session.user){
@@ -114,4 +115,4 @@ RouterEventos.post('/update/:_id&:start&:end', function(req, res) {
   })
 })
 
-module.exports = RouterEventos
+module.exports = RouterEventos // se exporta el modulo con las rutas para eventos

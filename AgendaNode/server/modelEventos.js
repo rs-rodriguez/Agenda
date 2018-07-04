@@ -1,6 +1,7 @@
 let mongoose = require('mongoose'),
 Schema = mongoose.Schema,
 
+// se difine el documento donde se guardara la informacion de eventos
 EventSchema = new Schema({
     title:{
         type:String,
@@ -21,4 +22,4 @@ EventSchema = new Schema({
 });
 
 let EventoModel = mongoose.model('Evento', EventSchema)
-module.exports = EventoModel
+module.exports = EventoModel // se exporta el modelo
